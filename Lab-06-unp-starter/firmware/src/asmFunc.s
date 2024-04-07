@@ -14,7 +14,7 @@
 .type nameStr,%gnu_unique_object
     
 /*** STUDENTS: Change the next line to your name!  **/
-nameStr: .asciz "Inigo Montoya"  
+nameStr: .asciz "Bijan Moradi"  
  
 /* initialize a global variable that C can access to print the nameStr */
 .global nameStrPtr
@@ -70,10 +70,18 @@ asmFunc:
      * Use it to test the C test code */
     
     /*** STUDENTS: Place your code BELOW this line!!! **************/
-
-    
+    /**r5 = ra r6 = rb**/
+    MOV R5, R0 /* store the value in r0 in r5 (Ra in the lab sheet)*/
+    ASR R5, R5, 16 /*shift right into r5 LSB using ASR so MS 16bits is the sign bit*/
+    LDR R7, = a_value   /*store the unpacked number into A */
+    STR R5, [R7]  /* store the unpacked number*/
+    MOV R6, R0 /* store the value in r0 in r6 (Rb in the lab sheet)*/
+    LSL R6, R6, 16 /*shift to the left by 16 bits, throwing away the A value from the R6 register*/
+    ASR R6, R6, 16 /*shift back to the proper position using, ASR leaving the MS 16bits as the sign bit*/
+    LDR R7, = b_value   /* store the unpacked number into B*/  
+    STR R6, [R7]  /* store the unpacked number*/
     /*** STUDENTS: Place your code ABOVE this line!!! **************/
-
+    
 done:    
     /* restore the caller's registers, as required by the 
      * ARM calling convention 
